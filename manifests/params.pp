@@ -37,7 +37,7 @@ class augeas::params {
 
     'Debian': {
       if versioncmp($::rubyversion, '1.9.1') >= 0 {
-        if $::operatingsystemrelease >= '15.10' {
+        if versioncmp($::operatingsystemrelease, '15.10') >= 0 {
           # libaugeas-ruby1.9.1 is no longer around in Ubuntu 15.10
           $ruby_pkg = 'ruby-augeas'
         } else {
