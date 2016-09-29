@@ -1,3 +1,12 @@
+## 2016-08-19 - Release 1.5.1
+
+- Fix Travis CI tests
+
+## 2016-08-18 - Release 1.5.0
+
+- Use Augeas PPA for Travis CI tests
+- Include augeas 'super' class when not declared (fix #93)
+
 ## 2015-09-09 - Release 1.4.2
 
 Fix for puppet AIO packaging

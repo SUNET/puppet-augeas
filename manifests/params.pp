@@ -4,15 +4,6 @@
 #
 class augeas::params {
 
-  if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $lens_dir = '/opt/puppetlabs/puppet/share/augeas/lenses'
-  } elsif (defined('$is_pe') and str2bool("${::is_pe}")) { # lint:ignore:only_variable_string
-    # puppet enterpise has a different lens location
-    $lens_dir = '/opt/puppet/share/augeas/lenses'
-  } else {
-    $lens_dir = '/usr/share/augeas/lenses'
-  }
-
   case $::osfamily {
     'RedHat': {
       $ruby_pkg = $::operatingsystem ? {
@@ -36,13 +27,11 @@ class augeas::params {
     }
 
     'Debian': {
-      if versioncmp($::rubyversion, '1.9.1') >= 0 {
-        if versioncmp($::operatingsystemrelease, '15.10') >= 0 {
-          # libaugeas-ruby1.9.1 is no longer around in Ubuntu 15.10
-          $ruby_pkg = 'ruby-augeas'
-        } else {
-          $ruby_pkg = 'libaugeas-ruby1.9.1'
-        }
+      if versioncmp($::rubyversion, '2.1.0') >= 0 {
+        $ruby_pkg = 'ruby-augeas'
+      }
+      elsif versioncmp($::rubyversion, '1.9.1') >= 0 {
+        $ruby_pkg = 'libaugeas-ruby1.9.1'
       } else {
         $ruby_pkg = 'libaugeas-ruby1.8'
       }
@@ -51,4 +40,14 @@ class augeas::params {
 
     default:  { fail("Unsupported OS family: ${::osfamily}") }
   }
+
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $lens_dir = '/opt/puppetlabs/puppet/share/augeas/lenses'
+  } elsif (defined('$is_pe') and str2bool("${::is_pe}")) { # lint:ignore:only_variable_string
+    # puppet enterpise has a different lens location
+    $lens_dir = '/opt/puppet/share/augeas/lenses'
+  } else {
+    $lens_dir = '/usr/share/augeas/lenses'
+  }
+
 }
