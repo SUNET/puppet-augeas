@@ -42,7 +42,9 @@ class augeas::params {
   }
 
   if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $lens_dir = '/opt/puppetlabs/puppet/share/augeas/lenses'
+    #$lens_dir = '/opt/puppetlabs/puppet/share/augeas/lenses'
+    # SUNET: Ubuntu 18.04 has Puppet >= 4.0.0, but no /opt/puppetlabs...
+    $lens_dir = '/usr/share/augeas/lenses'
   } elsif (defined('$is_pe') and str2bool("${::is_pe}")) { # lint:ignore:only_variable_string
     # puppet enterpise has a different lens location
     $lens_dir = '/opt/puppet/share/augeas/lenses'
